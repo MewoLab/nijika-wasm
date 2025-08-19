@@ -11,11 +11,9 @@ target_sources(main PUBLIC
         src/library/reader.cc
         src/library/compression.cc
         src/library/texture.cc
-
-        # fpng
-        extra/fpng/src/fpng.cpp
 )
-include_directories(include extra/bcdec extra/fpng/src)
+# Can't figure out how to move bcdec out of here, sorry
+include_directories(include modules/bcdec)
 
 # Libraries
 
@@ -30,10 +28,18 @@ endif()
 
 ## 7zip (LZMA)
 
-find_package(7zip CONFIG REQUIRED)
-target_link_libraries(main PRIVATE 7zip::7zip)
+file(GLOB SEVENZIP_SRC modules/7zip/C/*.c)
+add_library(7zip ${SEVENZIP_SRC})
+target_include_directories(7zip PUBLIC modules/7zip/C)
+target_link_libraries(main PRIVATE 7zip)
 
 ## LZ4
 
-find_package(lz4 CONFIG REQUIRED)
-target_link_libraries(main PRIVATE lz4::lz4)
+add_subdirectory(modules/lz4/build/cmake)
+target_link_libraries(main PRIVATE lz4)
+
+## fpng
+
+add_library(fpng modules/fpng/src/fpng.cpp)
+target_include_directories(fpng PUBLIC modules/fpng/src)
+target_link_libraries(main PRIVATE fpng)

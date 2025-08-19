@@ -28,30 +28,20 @@ It also decodes compression on CPU, not relying on specific GPU extensions that 
 
 ### Building (Unix-likes)
 
-1. Install dependencies
-
-> :warning: This assumes you have Vcpkg installed & set up with CMake.<br>
-> Feel free to add these 2 as submodules so this can be simplified.
-
-```bash
-vcpkg install 7zip:wasm32-emscripten
-vcpkg install lz4:wasm32-emscripten
-```
-
-2. Pull latest submodules
+1. Pull latest submodules
 
 ```bash
 git submodule update --init --remote --recursive
 ```
 
-3. Build
+2. Build
 
 > :warning: This hasn't been formally tested. I use CLion, sorry
 
 ```
 mkdir library
 cd library
-emcmake .. -DVCPKG_CMAKE_TOOLCHAIN_FILE=$EMSDK/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake
+emcmake .. -DCMAKE_TOOLCHAIN_FILE=$EMSDK/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake
 cmake --build .
 ```
 

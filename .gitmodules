@@ -1,6 +1,12 @@
 [submodule "extra/bcdec"]
-	path = extra/bcdec
+	path = modules/bcdec
 	url = https://github.com/iOrange/bcdec
 [submodule "extra/fpng"]
-	path = extra/fpng
+	path = modules/fpng
 	url = https://github.com/richgel999/fpng
+[submodule "modules/7zip"]
+	path = modules/7zip
+	url = https://github.com/ip7z/7zip.git
+[submodule "modules/lz4"]
+	path = modules/lz4
+	url = https://github.com/lz4/lz4.git
