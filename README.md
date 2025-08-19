@@ -50,6 +50,8 @@ cmake --build .
 Nijika does not have a proper TypeScript interface.<br>
 It is up to you to implement the interface, but I will provide general guidance (as shown below)
 
+(Anyone who is interested in building a TypeScript interface is welcome to, I just haven't done it yet)
+
 ### Initialization
 
 1. Instantiate the module and it's memory
@@ -61,48 +63,45 @@ let wasm = WebAssembly.instantiateStreaming(
         env: {
             // Memory growth is occasionally used when files are too large
             emscripten_notify_memory_growth: () => {
-                memory = new Uint8Array(
-                    wasmModule!.instance.exports.memory.buffer
-                );
+                memory = new Uint8Array(wasmModule!.instance.exports.memory.buffer);
             }
         }
     }
 );
-```
-
-2. Get the memory address (this will not change, so hold onto it)
-
-**Note: Do NOT call `init()` more than once.**
-
-```
-let memoryAddress = wasm?.instance.exports.init();
+memory = new Uint8Array(wasmModule!.instance.exports.memory.buffer);
 ```
 
 ### I/O
 
-3. Insert the file into memory
+2. Copy the file into WASM memory
 
 ```typescript
 let file: Blob = /*blob*/;
+// Allocate space in memory for the file and copy the data
+let input = wasm.instance.exports.malloc(file.size);
 memory?.set(
     new Uint8Array(await file.arrayBuffer()),
-    memoryAddress
+    input
 );
 ```
 
-4. Process it & extract it
+3. Get texture
 ```typescript
 try {
-/* 
-*   DDS: 0,
-*   AB (Unity 2018.4): 1
-*/
-    const type = 1;
-    
-    const size = wasm?.instance.exports.open(type);
-    const array = memory?.slice(memoryAddress, memoryAddress + size);
-    
-    const file = new Blob([array], {type: "image/png"});
+    // For DDS, use `getDDS`
+    // Retain the pointer that you allocated just a moment ago
+    const success = wasm.instance.exports.getDDS(input);
+    // Clean up the input
+    wasm.instance.exports.free(input);
+
+    // Access the buffer
+    const size = wasm.instance.exports.fifoOutputSize();
+    const pointer = wasm.instance.exports.fifoOutput();
+
+    // Convert into a blob
+    const file = new Blob([
+        memory!.slice(pointer, pointer + size)
+    ], {type: "image/png"});
     // It's complete! `file` is your asset, converted into a PNG.
 } catch(err) {
     console.log(`An exception occurred.`, err);
