@@ -4,13 +4,14 @@ project(main)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY bin)
 
-add_executable(main)
+add_executable(main
+        src/wasm/texture.cc)
 target_sources(main PUBLIC
         # Library
-        src/library/bundle.cc
-        src/library/reader.cc
-        src/library/compression.cc
-        src/library/texture.cc
+        src/library/texture/bundle.cc
+        src/library/texture/reader.cc
+        src/library/texture/compression.cc
+        src/library/texture/decoder.cc
 )
 # Can't figure out how to move bcdec out of here, sorry
 include_directories(include modules/bcdec)
@@ -18,12 +19,12 @@ include_directories(include modules/bcdec)
 # Libraries
 
 if(EMSCRIPTEN)
-    target_sources(main PUBLIC src/platform/wasm.cc)
+    target_sources(main PUBLIC src/wasm.cc)
 
     #set_target_properties(main PROPERTIES LINK_FLAGS    "-s WASM=1 -sALLOW_MEMORY_GROWTH -sINITIAL_MEMORY=64MB --no-entry -sENVIRONMENT=web -std=c++17 -sEXPORTED_FUNCTIONS=_open,_init")
-    set_target_properties(main PROPERTIES LINK_FLAGS    "-Os -s WASM=1 -sALLOW_MEMORY_GROWTH -sINITIAL_MEMORY=64MB -sSTANDALONE_WASM=1 --no-entry -sENVIRONMENT=web -std=c++17 -sEXPORTED_FUNCTIONS=_open,_init")
+    set_target_properties(main PROPERTIES LINK_FLAGS    "-Os -s WASM=1 -sALLOW_MEMORY_GROWTH -sINITIAL_MEMORY=4MB -sSTANDALONE_WASM=1 --no-entry -sENVIRONMENT=web -std=c++17 -sEXPORTED_FUNCTIONS=_free,_malloc")
 else()
-    target_sources(main PUBLIC src/platform/debug.cc)
+    # I dunno, I removed the debug code
 endif()
 
 ## 7zip (LZMA)
