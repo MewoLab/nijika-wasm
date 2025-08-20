@@ -27,8 +27,10 @@ extern "C" {
     bool loadAwb(void* awbBuffer, size_t awbSize, void* acbBuffer, size_t acbSize) {
         if (!vgmStreamInit())
             return false;
-        if (awb != nullptr)
+        if (awb != nullptr) {
+            libvgmstream_close_stream(vgmstream);
             delete awb;
+        }
         awb = new AWB(awbBuffer, awbSize, acbBuffer, acbSize);
         return true;
     }
