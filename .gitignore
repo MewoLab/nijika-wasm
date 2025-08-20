@@ -1,5 +1,4 @@
 # Build directories
-library/
 app/
 build/
 build-debug/
