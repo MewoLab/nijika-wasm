@@ -10,3 +10,6 @@
 [submodule "modules/lz4"]
 	path = modules/lz4
 	url = https://github.com/lz4/lz4.git
+[submodule "modules/vgmstream"]
+	path = modules/vgmstream
+	url = https://github.com/raymonable/vgmstream.git

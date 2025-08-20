@@ -5,8 +5,8 @@
 #include <headers.hh>
 #include <wasm.hh>
 
-#include <library/bundle.hh>
-#include <library/texture.hh>
+#include <library/texture/bundle.hh>
+#include <library/texture/texture.hh>
 
 void decode(Texture texture) {
     auto data = texture.decodePixels();

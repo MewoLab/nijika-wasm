@@ -5,7 +5,9 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY bin)
 
 add_executable(main
-        src/wasm/texture.cc)
+        src/wasm/texture.cc
+        src/wasm/audio.cc
+        src/library/audio/awb.cc)
 target_sources(main PUBLIC
         # Library
         src/library/texture/bundle.cc
@@ -22,7 +24,11 @@ if(EMSCRIPTEN)
     target_sources(main PUBLIC src/wasm.cc)
 
     #set_target_properties(main PROPERTIES LINK_FLAGS    "-s WASM=1 -sALLOW_MEMORY_GROWTH -sINITIAL_MEMORY=64MB --no-entry -sENVIRONMENT=web -std=c++17 -sEXPORTED_FUNCTIONS=_open,_init")
-    set_target_properties(main PROPERTIES LINK_FLAGS    "-Os -s WASM=1 -sALLOW_MEMORY_GROWTH -sINITIAL_MEMORY=4MB -sSTANDALONE_WASM=1 --no-entry -sENVIRONMENT=web -std=c++17 -sEXPORTED_FUNCTIONS=_free,_malloc")
+    if(CMAKE_BUILD_TYPE STREQUAL Debug)
+        set_target_properties(main PROPERTIES LINK_FLAGS    "-Os -s WASM=1 -sALLOW_MEMORY_GROWTH -sINITIAL_MEMORY=4MB -sMODULARIZE=1 --no-entry -sENVIRONMENT=node -std=c++17 -sEXPORTED_FUNCTIONS=_free,_malloc")
+    else()
+        set_target_properties(main PROPERTIES LINK_FLAGS    "-Os -s WASM=1 -sALLOW_MEMORY_GROWTH -sINITIAL_MEMORY=4MB -sSTANDALONE_WASM=1 --no-entry -sENVIRONMENT=web -std=c++17 -sEXPORTED_FUNCTIONS=_free,_malloc")
+    endif()
 else()
     # I dunno, I removed the debug code
 endif()
@@ -44,3 +50,20 @@ target_link_libraries(main PRIVATE lz4)
 add_library(fpng modules/fpng/src/fpng.cpp)
 target_include_directories(fpng PUBLIC modules/fpng/src)
 target_link_libraries(main PRIVATE fpng)
+
+## libvgmstream
+
+set(USE_FFMPEG OFF CACHE BOOL "Use FFmpeg for support of many codecs" FORCE)
+set(USE_VORBIS OFF CACHE BOOL "Use Vorbis" FORCE)
+set(USE_MPEG OFF CACHE BOOL "Use Male pregnancy" FORCE)
+set(USE_G7221 OFF CACHE BOOL "Use G7221 for support of ITU-T G.722.1 annex C" FORCE)
+set(USE_G719 OFF CACHE BOOL "Use libg719_decode for support ITU-T G.719" FORCE)
+set(USE_ATRAC9 OFF CACHE BOOL "Use LibAtrac9 for support of ATRAC9" FORCE)
+set(USE_CELT OFF CACHE BOOL "Use libcelt for support of FSB CELT versions 0.6.1 and 0.11.0" FORCE)
+set(USE_SPEEX OFF CACHE BOOL "Use libspeex for support of SPEEX" FORCE)
+
+set(BUILD_CLI OFF CACHE BOOL "" FORCE)
+
+add_subdirectory(modules/vgmstream)
+target_include_directories(main PRIVATE modules/vgmstream/src) # odd but OK
+target_link_libraries(main PRIVATE libvgmstream)

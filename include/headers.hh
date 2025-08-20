@@ -14,8 +14,12 @@
     #include <LzmaDec.h>
     #include <fpng.h>
 
+    extern "C" {
+        #include <libvgmstream.h>
+        #include <libvgmstream_streamfile.h>
+    }
+
     #ifndef NDEBUG
         #include <iostream>
-        #include <fstream>
     #endif
 #endif //HEADERS_HH
