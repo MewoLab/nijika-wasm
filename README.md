@@ -28,6 +28,9 @@ It also decodes compression on CPU, not relying on specific GPU extensions that 
 
 ### Building (Unix-likes)
 
+> :exclamation: You can find the latest stable build in the [Releases](https://github.com/MewoLab/nijika-wasm/releases) tab.<br>
+> Please read the release notes for more information.
+
 1. Pull latest submodules
 
 ```bash
@@ -69,4 +72,5 @@ nijika.assetBundle(abBuffer) // -> outputs blob (not a promise)
 const awb = nijika.awb(awbBuffer, acbBuffer) // (acb is optional) -> outputs an AWB
 awb.trackList() // -> outputs string[]
 awb.get(trackIndex) // (index is optional) -> outputs blob
+
 ```
