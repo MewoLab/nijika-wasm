@@ -9,17 +9,21 @@
 
     #include <string>
     #include <vector>
+    #include <map>
 
     #include <lz4.h>
     #include <LzmaDec.h>
     #include <fpng.h>
 
-    extern "C" {
-        #include <libvgmstream.h>
-        #include <libvgmstream_streamfile.h>
-    }
+    #ifdef __EMSCRIPTEN__
+        extern "C" {
+            #include <libvgmstream.h>
+            #include <libvgmstream_streamfile.h>
+        }
+    #endif
 
     #ifndef NDEBUG
         #include <iostream>
+        #include <fstream>
     #endif
 #endif //HEADERS_HH

@@ -1,5 +1,5 @@
 //
-// Created by Raymond on 6/5/25.
+// Created by Raymond on 24/08/2025.
 //
 
 #ifndef TEXTURE_HH
@@ -20,14 +20,15 @@ enum TextureFormat: char {
 };
 
 struct Texture {
-    uint32_t width;
-    uint32_t height;
-    TextureFormat format;
+	uint32_t width;
+	uint32_t height;
+	TextureFormat format;
 
-    uint32_t size;
-    char* data;
+	uint32_t size;
+	uint32_t offset;
+	char* data = nullptr;
 
-	char* decodePixels() const;
+	char* decodePixels(bool) const;
 };
 
 #endif //TEXTURE_HH
