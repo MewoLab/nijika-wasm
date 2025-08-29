@@ -78,7 +78,7 @@ extern "C" {
         delete texture2D;
         return true;
     }
-    EMSCRIPTEN_KEEPALIVE bool getAb(void* assetBundleBuffer) {
+    EMSCRIPTEN_KEEPALIVE bool getAssetBundleDirect(void* assetBundleBuffer) {
         auto assetBundle = new AssetBundle(static_cast<char*>(assetBundleBuffer));
         if (assetBundle->archive == nullptr) return false;
         if (assetBundle->archive->assets[TEXTURE_2D].empty()) return false;
