@@ -1,4 +1,6 @@
-# Nijika WebAssembly
+# Nijika
+
+![nijika](https://github.com/user-attachments/assets/870c2df1-8c30-4333-bb7c-a29762e2427a)
 
 Nijika is a custom lightweight WebAssembly module capable of reading specific AssetBundles and DDS textures. It is the backend for [AquaNet2](https://github.com/MewoLab/AquaNet2)'s local asset viewer.
 
@@ -74,3 +76,4 @@ awb.trackList() // -> outputs string[]
 awb.get(trackIndex) // (index is optional) -> outputs blob
 
 ```
+
