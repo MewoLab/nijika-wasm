@@ -9,11 +9,12 @@ Nijika is NOT a general-purpose asset reader yet, it is only made to meet our ne
 ## Features
 
 It can read...
- - Unity (specifically 2018.4 at the moment) Texture2Ds within AssetBundles
+ - Unity (specifically targetting 2018.4 at the moment, 5.X support may come later) Texture2Ds within AssetBundles with most compression types supported.
  - DDS files compressed with DXT1, DXT3, DXT5 or uncompressed RGB, RGBA, BGR, and BGRA.
  - AWB (with ACB) sound files using [vgmstream](https://github.com/raymonable/vgmstream)
 
 It also decodes compression on CPU, not relying on specific GPU extensions that aren't available on some systems.
+(In the future, it might be a good idea to add GPU support for devices that *can* decode these formats for added efficiency. For now it's fast enough, though)
 
 ## Goals
 
@@ -77,3 +78,12 @@ awb.get(trackIndex) // (index is optional) -> outputs blob
 
 ```
 
+## References
+
+Nijika was put together using the following references. Thank you to everyone who helped with the following and Nijika!
+ - [AssetStudio](https://https://github.com/Perfare/AssetStudio) - Unity CAB file format
+ - [vgmstream](https://github.com/vgmstream/vgmstream) - Audio decoding
+ - [fpng](https://github.com/richgel999/fpng) (Love your work, thank you especially) - PNG creation
+ - [bcdec](https://github.com/iOrange/bcdec) - BC1/2/3 & 7 decoding
+ - [lz4](https://github.com/lz4/lz4) - Unity AssetBundle compression
+ - [7-Zip](https://7-zip.org) - LZMA compression
