@@ -3,7 +3,7 @@
 //
 
 #include <headers.hh>
-#include <wasm.hh>
+#include <wasm/bindings.hh>
 
 #include <library/audio/awb.hh>
 #include <library/audio/riff.hh>

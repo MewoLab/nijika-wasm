@@ -24,7 +24,8 @@ include_directories(include modules/bcdec)
 
 if(EMSCRIPTEN)
     target_sources(main PUBLIC
-            src/wasm.cc
+            src/wasm/bindings.cc
+
             src/wasm/audio.cc
             src/wasm/texture.cc
     )
@@ -34,6 +35,8 @@ if(EMSCRIPTEN)
     else()
         set_target_properties(main PROPERTIES LINK_FLAGS    "-Os -s WASM=1 -sALLOW_MEMORY_GROWTH -sINITIAL_MEMORY=4MB -sSTANDALONE_WASM=1 --no-entry -sENVIRONMENT=web -std=c++17 -sEXPORTED_FUNCTIONS=_free,_malloc")
     endif()
+else()
+
 endif()
 
 ## 7zip (LZMA)
@@ -66,6 +69,9 @@ set(USE_CELT OFF CACHE BOOL "Use libcelt for support of FSB CELT versions 0.6.1 
 set(USE_SPEEX OFF CACHE BOOL "Use libspeex for support of SPEEX" FORCE)
 
 set(BUILD_CLI OFF CACHE BOOL "" FORCE)
+set(BUILD_FB2K OFF CACHE BOOL "" FORCE)
+set(BUILD_WINAMP OFF CACHE BOOL "" FORCE)
+set(BUILD_XMPLAY OFF CACHE BOOL "" FORCE)
 
 add_subdirectory(modules/vgmstream)
 target_include_directories(main PRIVATE modules/vgmstream/src) # odd but OK
