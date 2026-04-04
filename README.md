@@ -1,10 +1,13 @@
 # Nijika
 
+> [!WARNING]
+> Nijika is no longer being maintained. Please use [ikuyo](https://github.com/raymonable/ikuyo).<br> Ikuyo supports more game formats and has native pre-built binaries with a command line interface.
+
 ![nijika](https://github.com/user-attachments/assets/870c2df1-8c30-4333-bb7c-a29762e2427a)
 
 Nijika is a custom lightweight WebAssembly module capable of reading specific AssetBundles and DDS textures. It is the backend for [AquaNet2](https://github.com/MewoLab/AquaNet2)'s local asset viewer.
 
-Nijika is NOT a general-purpose asset reader yet, it is only made to meet our needs. The limitations for what it is capable of reading are shown below.<br>
+It is **NOT** a general-purpose asset reader, it is only made to meet our needs. The limitations for what it is capable of reading are shown below.<br>
 
 ## Features
 
@@ -13,15 +16,7 @@ It can read...
  - DDS files compressed with DXT1, DXT3, DXT5 or uncompressed RGB, RGBA, BGR, and BGRA.
  - AWB (with ACB) sound files using [vgmstream](https://github.com/raymonable/vgmstream)
 
-It also decodes compression on CPU, not relying on specific GPU extensions that aren't available on some systems.
-(In the future, it might be a good idea to add GPU support for devices that *can* decode these formats for added efficiency. For now it's fast enough, though)
-
-## Goals
-
-- Unity 5 support
-- Increase scope for reading AssetBundles?
-- Github Workflow?
-- Better documentation for building & Windows
+It decodes texture compression systems like BC1-3 / BC7 on CPU instead of relying on specific GPU extensions that aren't available on some systems.
 
 ## Building
 
